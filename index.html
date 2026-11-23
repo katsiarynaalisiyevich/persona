@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кот Матроскин — хозяйственный кот из Простоквашино</title>
+<style>
+:root{--bg:#faf6ef;--ink:#2b2622;--muted:#6d645a;--accent:#d9622b;--card:#fff;--line:#eadfce}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.7 Georgia,"Times New Roman",serif}
+h1,h2,h3{font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;line-height:1.15;margin:0}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+.hero{position:relative;min-height:80vh;display:flex;align-items:flex-end;color:#fff;overflow:hidden}
+.hero img{position:absolute;inset:0;z-index:0}
+.hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(20,14,8,.88),rgba(20,14,8,.45) 55%,rgba(20,14,8,.25))}
+.hero .wrap{position:relative;z-index:2;padding-bottom:56px;padding-top:80px}
+.tag{display:inline-block;font:600 13px/1 -apple-system,Helvetica,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;background:var(--accent);padding:8px 12px;border-radius:99px;margin-bottom:20px}
+h1{font-size:clamp(40px,8vw,76px);letter-spacing:-.02em}
+.hero p{max-width:620px;font-size:clamp(18px,2.4vw,22px);margin:18px 0 0;color:#f3ebe0}
+section{padding:72px 0}
+h2{font-size:clamp(28px,4.5vw,40px);margin-bottom:24px;letter-spacing:-.01em}
+h2::after{content:"";display:block;width:56px;height:4px;background:var(--accent);border-radius:2px;margin-top:14px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.photo{border-radius:18px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 12px 30px rgba(60,40,20,.18)}
+p{margin:0 0 16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:32px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.card h3{font-size:19px;color:var(--accent);margin-bottom:8px}
+.card p{margin:0;font-size:16px;color:var(--muted);line-height:1.6}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:32px}
+.gallery .photo{aspect-ratio:3/4}
+.gallery .photo:last-child{aspect-ratio:3/4}
+.facts{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.facts li{background:var(--card);border-left:5px solid var(--accent);border-radius:10px;padding:16px 20px;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.finale{position:relative;color:#fff;padding:110px 0;overflow:hidden;text-align:center}
+.finale img{position:absolute;inset:0;z-index:0}
+.finale::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(rgba(25,16,8,.7),rgba(25,16,8,.8))}
+.finale .wrap{position:relative;z-index:2}
+blockquote{margin:0 auto;max-width:640px;font-size:clamp(22px,3.6vw,32px);line-height:1.4;font-style:italic}
+.finale small{display:block;margin-top:18px;font:15px -apple-system,Helvetica,Arial,sans-serif;color:#f0dcc4}
+footer{padding:28px 0 40px;font:12px/1.6 -apple-system,Helvetica,Arial,sans-serif;color:var(--muted)}
+footer a{color:var(--muted)}
+@media(max-width:720px){body{font-size:17px}section{padding:52px 0}.split{grid-template-columns:1fr;gap:24px}.hero{min-height:70vh}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <img src="images/village.jpg" alt="Деревенский пейзаж — Простоквашино">
+  <div class="wrap">
+    <span class="tag">Простоквашино</span>
+    <h1>Кот Матроскин</h1>
+    <p>Хозяйственный, серьёзный и понимающий толк в вещах. Корова доится, дом стоит, зимой все сыты — проходите, чаю налью. Только сапоги вытирайте.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap split">
+    <div>
+      <h2>Обо мне</h2>
+      <p>Фамилия у меня от слова «матрос» — дедушка на кораблях плавал. А зовут просто котом, и меня это, между прочим, слегка задевает, но я не гордый.</p>
+      <p>Я бережливый, рассудительный и слегка ворчливый — исключительно по делу. Не жадный, а <strong>хозяйственный</strong>: две большие разницы. Порядок в хозяйстве начинается с порядка в расходах.</p>
+      <p>Живу с Дядей Фёдором и Шариком. Пёс — работник так себе, всё за зайцами с фоторужьём. А хозяйство на ком? Правильно, на коте.</p>
+    </div>
+    <div class="photo"><img src="images/cat.jpg" alt="Кошачья мозаика на фасаде дома"></div>
+  </div>
+</section>
+
+<section style="background:#f3ebdd">
+  <div class="wrap">
+    <h2>Чем занимаюсь</h2>
+    <p>Кот, а веду целое хозяйство — и прибыльно. Главный актив — корова Мурка и телёнок Гаврюша: приплод и рост активов, как у людей, только с рогами.</p>
+    <div class="gallery">
+      <div class="photo"><img src="images/cow.jpg" alt="Корова на лугу"></div>
+      <div class="photo"><img src="images/milk.jpg" alt="Свежее молоко"></div>
+    </div>
+    <div class="cards">
+      <div class="card"><h3>Молочное хозяйство</h3><p>Молоко, сметана, масло — всё своё, с гарантией качества. Я лично пробую.</p></div>
+      <div class="card"><h3>Домашнее хозяйство</h3><p>Заготовки, дрова, ремонт, бюджет. Завхоз, бухгалтер и управляющий в одном лице.</p></div>
+      <div class="card"><h3>Оптимизация расходов</h3><p>Растяну скромные средства так, что всем хватит и на чёрный день останется.</p></div>
+      <div class="card"><h3>Наставничество</h3><p>Объясняю Шарику и Дяде Фёдору, как вести дела. Слушают через раз, но метод верный.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Интересные факты</h2>
+    <ul class="facts">
+      <li>Меня задевает, что у меня нет имени — просто «кот». А фамилия есть: Матроскин.</li>
+      <li>Записываю каждую копейку. Это не жадность, это порядок.</li>
+      <li>Корову напрокат все считали блажью, а вышло выгоднейшее вложение: и молоко, и телёнок.</li>
+      <li>Мой принцип — «совместный труд объединяет» (для моей пользы, разумеется).</li>
+      <li>Ворчун снаружи, но надёжный внутри. Ворчание — это у меня форма заботы.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="finale">
+  <img src="images/garden.jpg" alt="Урожай с огорода">
+  <div class="wrap">
+    <blockquote>«Совместный труд — для моей пользы — он объединяет.»<small>— кот Матроскин. Пока другие мечтают, я делаю запасы.</small></blockquote>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Фото: «violence begets violence in ripples…» — naturalflow (<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>, <a href="https://www.flickr.com/photos/70693287@N00/4497566897">источник</a>);
+    «Cow meadow farm 2020» — Harrisonkenneth (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=88228720">источник</a>);
+    «Fresh Milk» — ShardsOfBlue (<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>, <a href="https://www.flickr.com/photos/9350569@N08/5512782277">источник</a>);
+    «Cat mosaic on house façade, Brussels» — historic.brussels (<a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>, <a href="https://www.flickr.com/photos/22325431@N05/2183347960">источник</a>);
+    «Vegetable Garden Harvest» — Gemma Evans stayandroam (<a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en/">CC0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=61771912">источник</a>).
+  </div>
+</footer>
+</body>
+</html>
