@@ -3,114 +3,334 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Кот Матроскин — хозяйственный кот из Простоквашино</title>
+<title>Проектный менеджер</title>
 <style>
-:root{--bg:#faf6ef;--ink:#2b2622;--muted:#6d645a;--accent:#d9622b;--card:#fff;--line:#eadfce}
+/* палитра и параметры взяты из theme.css сайта rhodeskin.com */
+:root{--bg:#ffffff;--soft:#f1f0ed;--ink:#67645e;--dark:#2b1b1c;--muted:#84827e;--line:#dddedc;--accent:#6b2433;--r:12px;--pill:40px;--brand:#2f6650;--mint:#e4f2ea}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.7 Georgia,"Times New Roman",serif}
-h1,h2,h3{font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;line-height:1.15;margin:0}
-img{display:block;width:100%;height:100%;object-fit:cover}
-.wrap{max-width:900px;margin:0 auto;padding:0 20px}
-.hero{position:relative;min-height:80vh;display:flex;align-items:flex-end;color:#fff;overflow:hidden}
-.hero img{position:absolute;inset:0;z-index:0}
-.hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(20,14,8,.88),rgba(20,14,8,.45) 55%,rgba(20,14,8,.25))}
-.hero .wrap{position:relative;z-index:2;padding-bottom:56px;padding-top:80px}
-.tag{display:inline-block;font:600 13px/1 -apple-system,Helvetica,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;background:var(--accent);padding:8px 12px;border-radius:99px;margin-bottom:20px}
-h1{font-size:clamp(40px,8vw,76px);letter-spacing:-.02em}
-.hero p{max-width:620px;font-size:clamp(18px,2.4vw,22px);margin:18px 0 0;color:#f3ebe0}
-section{padding:72px 0}
-h2{font-size:clamp(28px,4.5vw,40px);margin-bottom:24px;letter-spacing:-.01em}
-h2::after{content:"";display:block;width:56px;height:4px;background:var(--accent);border-radius:2px;margin-top:14px}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-.photo{border-radius:18px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 12px 30px rgba(60,40,20,.18)}
-p{margin:0 0 16px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:32px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
-.card h3{font-size:19px;color:var(--accent);margin-bottom:8px}
-.card p{margin:0;font-size:16px;color:var(--muted);line-height:1.6}
-.gallery{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:32px}
-.gallery .photo{aspect-ratio:3/4}
-.gallery .photo:last-child{aspect-ratio:3/4}
-.facts{list-style:none;padding:0;margin:0;display:grid;gap:14px}
-.facts li{background:var(--card);border-left:5px solid var(--accent);border-radius:10px;padding:16px 20px;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-.finale{position:relative;color:#fff;padding:110px 0;overflow:hidden;text-align:center}
-.finale img{position:absolute;inset:0;z-index:0}
-.finale::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(rgba(25,16,8,.7),rgba(25,16,8,.8))}
-.finale .wrap{position:relative;z-index:2}
-blockquote{margin:0 auto;max-width:640px;font-size:clamp(22px,3.6vw,32px);line-height:1.4;font-style:italic}
-.finale small{display:block;margin-top:18px;font:15px -apple-system,Helvetica,Arial,sans-serif;color:#f0dcc4}
-footer{padding:28px 0 40px;font:12px/1.6 -apple-system,Helvetica,Arial,sans-serif;color:var(--muted)}
-footer a{color:var(--muted)}
-@media(max-width:720px){body{font-size:17px}section{padding:52px 0}.split{grid-template-columns:1fr;gap:24px}.hero{min-height:70vh}}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 Swiss,"Swiss 721","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:700;color:var(--dark);letter-spacing:-.02em;line-height:1.02;text-transform:lowercase}
+strong{font-weight:700;color:var(--dark)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.caps{font-size:12px;font-weight:400;letter-spacing:.14em;text-transform:uppercase}
+
+/* верхняя полоса и навигация */
+nav{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+nav .logo{font-weight:700;font-size:22px;letter-spacing:-.03em;color:var(--dark);text-transform:lowercase}
+nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+nav a{color:var(--ink);text-decoration:none;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+nav a:hover{color:var(--accent)}
+@media(max-width:720px){nav ul{gap:14px}nav a{font-size:10px;letter-spacing:.08em}nav .logo{font-size:18px}}
+
+/* hero */
+.hero{padding:110px 0 90px;background:var(--soft);border-radius:0 0 var(--pill) var(--pill)}
+.hero .caps{display:inline-block;border:1px solid var(--ink);border-radius:var(--pill);padding:9px 18px;margin-bottom:34px}
+h1{font-size:clamp(54px,12.5vw,150px);letter-spacing:-.05em;line-height:.9}
+h1 em{font-style:normal;color:var(--accent)}
+.hero p{max-width:520px;margin:38px 0 0;font-size:clamp(17px,2vw,20px)}
+.btn{display:inline-block;margin-top:30px;background:var(--ink);color:#fff;text-decoration:none;border-radius:var(--pill);padding:15px 32px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;transition:background .2s}
+.btn:hover{background:var(--accent)}
+
+/* бегущая строка */
+.strip{overflow:hidden;white-space:nowrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;margin-top:70px;background:var(--bg)}
+.strip div{display:inline-block;animation:slide 28s linear infinite;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
+@keyframes slide{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.strip div{animation:none}}
+
+/* секции */
+section{padding:92px 0}
+section.alt{background:var(--soft);border-radius:var(--pill);margin:0 12px}
+.head{display:flex;align-items:baseline;gap:16px;margin-bottom:42px}
+.head span{font-size:12px;letter-spacing:.14em;color:var(--muted)}
+h2{font-size:clamp(34px,6vw,64px);letter-spacing:-.04em}
+.lead{max-width:640px;font-size:20px;color:var(--dark)}
+p{margin:0 0 18px}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:52px}
+.stat{background:var(--soft);border-radius:var(--r);padding:28px}
+.stat b{display:block;font-weight:700;font-size:84px;letter-spacing:-.06em;line-height:.9;color:var(--accent)}
+.stat span{display:block;margin-top:14px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:var(--bg);border-radius:var(--r);padding:30px 28px;min-height:190px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .25s}
+.card:hover{transform:translateY(-4px)}
+.card .n{font-size:12px;letter-spacing:.14em;color:var(--muted)}
+.card h3{font-size:28px;margin:34px 0 10px}
+.card p{margin:0;font-size:15px;color:var(--ink);line-height:1.55}
+
+.job{display:grid;grid-template-columns:230px 1fr;gap:28px;padding:30px 0;border-top:1px solid var(--line)}
+.job:last-child{border-bottom:1px solid var(--line)}
+.when{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.8}
+.job h3{font-size:30px;margin-bottom:8px}
+.job .org{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.job p{margin:0;font-size:16px}
+@media(max-width:720px){.job{grid-template-columns:1fr;gap:8px}section{padding:64px 0}.hero{padding:70px 0 60px}.strip{margin-top:48px}}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+@media(max-width:720px){.two{grid-template-columns:1fr;gap:36px}}
+.two h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:400}
+.two p{font-size:17px}
+
+.finale{background:var(--dark);color:#f1f0ed;padding:120px 0;text-align:center;border-radius:var(--pill) var(--pill) 0 0;margin-top:92px}
+blockquote{margin:0 auto;max-width:760px;font-weight:700;font-size:clamp(26px,4.4vw,46px);line-height:1.12;letter-spacing:-.03em;text-transform:lowercase}
+.finale small{display:block;margin-top:30px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#a3a3a3;font-weight:400}
+footer{background:var(--dark);padding:24px 0 40px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#84827e}
+
+/* фонтан эмодзи, складывающийся в буквы D Z E N G I */
+.card{position:relative;overflow:hidden;min-height:240px;padding-right:134px;outline:none}
+.card h3{font-size:24px}
+.glyph{position:absolute;right:24px;top:50%;width:85px;height:119px;margin-top:-60px;pointer-events:none}
+.glyph i{position:absolute;width:17px;height:17px;transform:translateX(var(--ox));transition:transform .35s ease-in}
+.glyph i::before{content:"";position:absolute;left:6px;top:6px;width:5px;height:5px;border-radius:50%;background:#cfe3d7;transition:opacity .2s}
+.glyph i b{position:absolute;left:0;top:0;width:17px;height:17px;display:block;font-weight:400;font-size:14px;line-height:17px;text-align:center;opacity:0;transform:translateY(var(--oy)) scale(.3);transition:transform .35s ease-in,opacity .25s}
+.card:hover .glyph i,.card:focus-visible .glyph i,.card:active .glyph i,.card.done .glyph i{transform:translateX(0);transition:transform 1s cubic-bezier(.3,.55,.5,1) calc(var(--k)*28ms)}
+.card:hover .glyph i b,.card:focus-visible .glyph i b,.card:active .glyph i b,.card.done .glyph i b{opacity:1;transform:translateY(0) scale(1);transition:transform 1s cubic-bezier(.2,1.45,.4,1) calc(var(--k)*28ms),opacity .2s calc(var(--k)*28ms)}
+.card:hover .glyph i::before,.card:focus-visible .glyph i::before,.card:active .glyph i::before,.card.done .glyph i::before{opacity:0}
+@media(max-width:560px){.card{padding-right:28px;min-height:0}.glyph{position:relative;right:auto;top:auto;margin:22px 0 0;order:-1}.card h3{margin-top:20px}}
+@media(prefers-reduced-motion:reduce){.glyph i,.glyph i b,.card:hover .glyph i,.card:hover .glyph i b{transition:none}}
+
+.hint{margin:34px 0 0;text-align:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);min-height:64px}
+.hint .final{display:none;margin-top:6px;padding:30px clamp(28px,7vw,64px) 26px;background:var(--soft);border-radius:var(--pill);font-family:"IBM Plex Mono","SF Mono",Menlo,Consolas,monospace;font-weight:500;font-size:clamp(34px,8vw,76px);letter-spacing:.14em;line-height:1;color:var(--brand);text-transform:uppercase}
+.hint .final small{display:block;width:max-content;margin:18px auto 0;padding:7px 16px;background:var(--mint);border-radius:var(--r);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;font-weight:400;letter-spacing:.14em;color:var(--brand);text-transform:uppercase}
+.hint.complete .ask{display:none}
+.hint.complete .final{display:inline-block;animation:rise .8s cubic-bezier(.2,1.3,.4,1)}
+@keyframes rise{from{opacity:0;transform:translateY(16px) scale(.9)}to{opacity:1;transform:none}}
+
+/* истории и правила */
+.stories{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.story{background:var(--soft);border-radius:var(--r);padding:30px 28px}
+.story .n{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.story h3{font-size:28px;margin:14px 0 12px}
+.story p{margin:0;font-size:15px;line-height:1.6}
+
+/* факты: карточки переворачиваются */
+.facts-title{margin:64px 0 22px;font-size:12px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:left}
+.facts-title span{margin-left:10px;color:var(--accent)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.fact{perspective:900px;height:210px;outline:none;cursor:pointer}
+.fi{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.3,.5,1)}
+.fact:hover .fi,.fact:focus .fi{transform:rotateY(180deg)}
+.ff,.fb{position:absolute;inset:0;border-radius:var(--r);backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:24px;display:flex;flex-direction:column}
+.ff{background:var(--bg)}
+.fe{font-size:42px;line-height:1;transition:transform .4s}
+.fact:hover .fe{transform:scale(1.15) rotate(-8deg)}
+.fn{margin-top:auto;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.ff h3{font-size:24px;margin-top:6px}
+.fb{background:var(--accent);color:#f6ece8;transform:rotateY(180deg);justify-content:center}
+.fb p{margin:0;font-size:18px;line-height:1.45}
+@media(prefers-reduced-motion:reduce){.fi{transition:none}}
+
+/* «Главное»: бенто-плитки */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.tile{grid-column:span 2;background:var(--bg);border-radius:var(--r);padding:26px;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
+.tile:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(60,30,30,.08)}
+.t-wide{grid-column:span 4}
+.t-dark{background:var(--dark);color:#e9dfd6}
+.t-dark h3{color:#fff}
+.tl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.t-dark .tl{color:#b9a898}
+.tile h3{font-size:28px;margin:14px 0 10px}
+.tile p{margin:0;font-size:16px;line-height:1.55}
+.big{display:flex;align-items:baseline;gap:18px;margin:10px 0 8px;font-weight:700;letter-spacing:-.06em;line-height:.9}
+.big .from{font-size:clamp(64px,10vw,120px);color:var(--line)}
+.big .arr{font-size:clamp(36px,5vw,56px);color:var(--muted);letter-spacing:0}
+.big b{font-size:clamp(64px,10vw,120px);color:var(--accent);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:18px}
+.chips i{font-style:normal;font-size:13px;padding:7px 14px;border-radius:var(--pill);background:var(--soft);color:var(--dark);transition:background .2s,color .2s}
+.chips i:hover{background:var(--accent);color:#fff}
+@media(max-width:860px){.tile,.t-wide{grid-column:span 3}}
+@media(max-width:560px){.bento{grid-template-columns:1fr}.tile,.t-wide{grid-column:auto}}
+/* появление при прокрутке (только если работает JS) */
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,1,.3,1)}
+.js .reveal.in{opacity:1;transform:none}
+.js .reveal .chips i{opacity:0;transform:scale(.6)}
+.js .reveal.in .chips i{opacity:1;transform:none;transition:opacity .3s,transform .45s cubic-bezier(.2,1.6,.4,1),background .2s,color .2s}
+.js .reveal.in .chips i:nth-child(2){transition-delay:.12s}.js .reveal.in .chips i:nth-child(3){transition-delay:.24s}.js .reveal.in .chips i:nth-child(4){transition-delay:.36s}
+@media(prefers-reduced-motion:reduce){.js .reveal,.js .reveal .chips i{opacity:1;transform:none;transition:none}}
+
+/* «Обо мне»: у каждого тезиса своя поза черлидерши */
+.cheer-note{display:inline-block;margin:0 0 30px;padding:10px 18px;border-radius:var(--pill);background:var(--soft);font-size:15px;color:var(--dark)}
+.steps{list-style:none;margin:0;padding:0}
+.step{display:grid;grid-template-columns:130px 1fr;gap:36px;align-items:center;padding:26px 0;border-top:1px solid var(--line)}
+.step:last-child{border-bottom:1px solid var(--line)}
+.step:nth-child(even){grid-template-columns:1fr 130px}
+.step:nth-child(even) .pose{order:2}
+.pose{width:130px;height:auto;overflow:visible}
+.pose .lb{fill:none;stroke:var(--accent);stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.pose .hd,.pose .sk{fill:var(--accent)}
+.pose .pm{fill:#d79aa4;transform-box:fill-box;transform-origin:center}
+.pose .sh{fill:var(--line)}
+.pose .fly{transform:translateY(-8px)}
+.sn{font-size:12px;letter-spacing:.14em;color:var(--accent)}
+.step h3{font-size:clamp(24px,3.4vw,36px);margin:8px 0 10px}
+.step p{margin:0;font-size:18px;color:var(--dark);max-width:620px}
+.step:hover .pm{animation:shake .5s ease-in-out 2}
+@keyframes shake{25%{transform:rotate(-18deg) scale(1.15)}75%{transform:rotate(18deg) scale(1.15)}}
+.js .step .pose{opacity:0;transform:translateY(26px) scale(.8);transition:opacity .5s,transform .7s cubic-bezier(.2,1.6,.4,1)}
+.js .step.seen .pose{opacity:1;transform:none}
+.js .step.seen .pm{animation:shake .5s ease-in-out .5s 2}
+@media(max-width:640px){.step,.step:nth-child(even){grid-template-columns:76px 1fr;gap:18px}.step:nth-child(even) .pose{order:0}.pose{width:76px}.step p{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.js .step .pose{opacity:1;transform:none;transition:none}.step .pm,.js .step.seen .pm{animation:none}}
 </style>
 </head>
 <body>
+<nav><div class="wrap"><span class="logo">pm</span><ul><li><a href="#about">Обо мне</a></li><li><a href="#work">Чем занимаюсь</a></li><li><a href="#stories">Истории</a></li><li><a href="#exp">Опыт</a></li><li><a href="#short">Главное</a></li></ul></div></nav>
 <header class="hero">
-  <img src="images/village.jpg" alt="Деревенский пейзаж — Простоквашино">
   <div class="wrap">
-    <span class="tag">Простоквашино</span>
-    <h1>Кот Матроскин</h1>
-    <p>Хозяйственный, серьёзный и понимающий толк в вещах. Корова доится, дом стоит, зимой все сыты — проходите, чаю налью. Только сапоги вытирайте.</p>
+    <span class="caps">Project Manager</span>
+    <h1>проектный<br><em>менеджер</em></h1>
+    <p>Развиваю два платёжных сервиса и веду четыре инженерные команды в продуктовой IT-компании.<br>Люблю порядок, ясность и людей, которые не боятся предлагать идеи.</p>
+    <a class="btn" href="#about">Читать дальше</a>
   </div>
+  <div class="strip" aria-hidden="true"><div>фиатные платежи · блокчейн-платежи · devops · dba · scrum · люди · фиатные платежи · блокчейн-платежи · devops · dba · scrum · люди · фиатные платежи · блокчейн-платежи · devops · dba · scrum · люди · фиатные платежи · блокчейн-платежи · devops · dba · scrum · люди ·</div></div>
 </header>
 
-<section>
-  <div class="wrap split">
-    <div>
-      <h2>Обо мне</h2>
-      <p>Фамилия у меня от слова «матрос» — дедушка на кораблях плавал. А зовут просто котом, и меня это, между прочим, слегка задевает, но я не гордый.</p>
-      <p>Я бережливый, рассудительный и слегка ворчливый — исключительно по делу. Не жадный, а <strong>хозяйственный</strong>: две большие разницы. Порядок в хозяйстве начинается с порядка в расходах.</p>
-      <p>Живу с Дядей Фёдором и Шариком. Пёс — работник так себе, всё за зайцами с фоторужьём. А хозяйство на ком? Правильно, на коте.</p>
-    </div>
-    <div class="photo"><img src="images/cat.jpg" alt="Кошачья мозаика на фасаде дома"></div>
+<section id="about">
+  <div class="wrap">
+    <div class="head"><span>01</span><h2>Обо мне</h2></div>
+    <p class="cheer-note">📣 В прошлом — черлидер в группе поддержки. Теперь болею за свои команды и продукт.</p>
+    <ol class="steps">
+      <li class="step"><svg class="pose" viewBox="0 0 120 160" aria-hidden="true"><ellipse class="sh" cx="60" cy="156" rx="30" ry="3"/><g><path class="lb" d="M56 47 L27 18"/><path class="lb" d="M64 47 L93 18"/><path class="lb" d="M55 100 L53 148"/><path class="lb" d="M65 100 L67 148"/><circle class="pm" cx="24" cy="15" r="9"/><circle class="pm" cx="96" cy="15" r="9"/><path class="lb" d="M60 40 L60 84"/><path class="sk" d="M50 82 L70 82 L79 101 L41 101 Z"/><circle class="hd" cx="60" cy="24" r="11"/></g></svg><div><span class="sn">01</span><h3>Счастье в мелочах</h3><p>Я человек, который находит <strong>счастье в мелочах</strong> и делает всё с удовольствием.</p></div></li>
+      <li class="step"><svg class="pose" viewBox="0 0 120 160" aria-hidden="true"><ellipse class="sh" cx="60" cy="156" rx="30" ry="3"/><g><path class="lb" d="M60 50 L20 50"/><path class="lb" d="M60 50 L100 50"/><path class="lb" d="M55 100 L45 148"/><path class="lb" d="M65 100 L75 148"/><circle class="pm" cx="15" cy="50" r="9"/><circle class="pm" cx="105" cy="50" r="9"/><path class="lb" d="M60 40 L60 84"/><path class="sk" d="M50 82 L70 82 L79 101 L41 101 Z"/><circle class="hd" cx="60" cy="24" r="11"/></g></svg><div><span class="sn">02</span><h3>Люди — ценность</h3><p>Для меня как для менеджера каждый человек в команде — это <strong>ценность, а не ресурс</strong>.</p></div></li>
+      <li class="step"><svg class="pose" viewBox="0 0 120 160" aria-hidden="true"><ellipse class="sh" cx="60" cy="156" rx="30" ry="3"/><g><path class="lb" d="M62 47 L88 10"/><path class="lb" d="M60 50 L43 64 L52 84"/><path class="lb" d="M55 100 L54 148"/><path class="lb" d="M65 100 L84 116 L70 130"/><circle class="pm" cx="90" cy="7" r="9"/><path class="lb" d="M60 40 L60 84"/><path class="sk" d="M50 82 L70 82 L79 101 L41 101 Z"/><circle class="hd" cx="60" cy="24" r="11"/></g></svg><div><span class="sn">03</span><h3>Задачи, которые зажигают</h3><p>Моя главная цель — чтобы людям нравились их работа и команда, а задачи по-настоящему зажигали.</p></div></li>
+      <li class="step"><svg class="pose" viewBox="0 0 120 160" aria-hidden="true"><ellipse class="sh" cx="60" cy="156" rx="30" ry="3"/><g class="fly"><path class="lb" d="M60 48 L28 20"/><path class="lb" d="M60 48 L92 20"/><path class="lb" d="M55 100 L30 138"/><path class="lb" d="M65 100 L90 138"/><circle class="pm" cx="24" cy="16" r="9"/><circle class="pm" cx="96" cy="16" r="9"/><path class="lb" d="M60 40 L60 84"/><path class="sk" d="M50 82 L70 82 L79 101 L41 101 Z"/><circle class="hd" cx="60" cy="24" r="11"/></g></svg><div><span class="sn">04</span><h3>Чётко и с умом</h3><p>Люблю структуру и порядок, а работу — чёткую и с умом. Ошибки признаю и разбираю: один раз ошибиться можно, повторять нельзя.</p></div></li>
+      <li class="step"><svg class="pose" viewBox="0 0 120 160" aria-hidden="true"><ellipse class="sh" cx="60" cy="156" rx="30" ry="3"/><g><path class="lb" d="M57 47 L25 20"/><path class="lb" d="M60 50 L94 72"/><path class="lb" d="M55 100 L36 120 L36 148"/><path class="lb" d="M65 100 L98 148"/><circle class="pm" cx="22" cy="17" r="9"/><circle class="pm" cx="98" cy="75" r="9"/><path class="lb" d="M60 40 L60 84"/><path class="sk" d="M50 82 L70 82 L79 101 L41 101 Z"/><circle class="hd" cx="60" cy="24" r="11"/></g></svg><div><span class="sn">05</span><h3>Бережно к командам</h3><p>Ценю компанию, в которой работаю, люблю продукт, который мы делаем, и стараюсь по-человечески бережно относиться к командам.</p></div></li>
+    </ol>
   </div>
 </section>
 
-<section style="background:#f3ebdd">
+<section class="alt" id="work">
   <div class="wrap">
-    <h2>Чем занимаюсь</h2>
-    <p>Кот, а веду целое хозяйство — и прибыльно. Главный актив — корова Мурка и телёнок Гаврюша: приплод и рост активов, как у людей, только с рогами.</p>
-    <div class="gallery">
-      <div class="photo"><img src="images/cow.jpg" alt="Корова на лугу"></div>
-      <div class="photo"><img src="images/milk.jpg" alt="Свежее молоко"></div>
-    </div>
+    <div class="head"><span>02</span><h2>Чем занимаюсь</h2></div>
+    <p class="lead" style="margin-bottom:36px">Развиваю два платёжных сервиса и веду четыре инженерные команды как менеджер.</p>
     <div class="cards">
-      <div class="card"><h3>Молочное хозяйство</h3><p>Молоко, сметана, масло — всё своё, с гарантией качества. Я лично пробую.</p></div>
-      <div class="card"><h3>Домашнее хозяйство</h3><p>Заготовки, дрова, ремонт, бюджет. Завхоз, бухгалтер и управляющий в одном лице.</p></div>
-      <div class="card"><h3>Оптимизация расходов</h3><p>Растяну скромные средства так, что всем хватит и на чёрный день останется.</p></div>
-      <div class="card"><h3>Наставничество</h3><p>Объясняю Шарику и Дяде Фёдору, как вести дела. Слушают через раз, но метод верный.</p></div>
+      <div class="card" tabindex="0"><span class="n">01</span><div><h3>Фиатные платежи</h3><p>Карты, ЕРИП, банковские переводы. Новые способы пополнения и вывода для клиентов.</p></div><span class="glyph" aria-hidden="true"><i style="left:0px;top:0px;--ox:42px;--oy:153px;--k:0"><b>🤑</b></i><i style="left:17px;top:0px;--ox:25px;--oy:153px;--k:1"><b>🤑</b></i><i style="left:34px;top:0px;--ox:8px;--oy:153px;--k:2"><b>🤑</b></i><i style="left:51px;top:0px;--ox:-9px;--oy:153px;--k:3"><b>💰</b></i><i style="left:0px;top:17px;--ox:42px;--oy:136px;--k:4"><b>💳</b></i><i style="left:68px;top:17px;--ox:-26px;--oy:136px;--k:5"><b>🤑</b></i><i style="left:0px;top:34px;--ox:42px;--oy:119px;--k:6"><b>💳</b></i><i style="left:68px;top:34px;--ox:-26px;--oy:119px;--k:7"><b>💵</b></i><i style="left:0px;top:51px;--ox:42px;--oy:102px;--k:8"><b>🤑</b></i><i style="left:68px;top:51px;--ox:-26px;--oy:102px;--k:9"><b>🪙</b></i><i style="left:0px;top:68px;--ox:42px;--oy:85px;--k:10"><b>💳</b></i><i style="left:68px;top:68px;--ox:-26px;--oy:85px;--k:11"><b>💵</b></i><i style="left:0px;top:85px;--ox:42px;--oy:68px;--k:12"><b>💸</b></i><i style="left:68px;top:85px;--ox:-26px;--oy:68px;--k:13"><b>💴</b></i><i style="left:0px;top:102px;--ox:42px;--oy:51px;--k:14"><b>🤑</b></i><i style="left:17px;top:102px;--ox:25px;--oy:51px;--k:15"><b>💳</b></i><i style="left:34px;top:102px;--ox:8px;--oy:51px;--k:16"><b>💸</b></i><i style="left:51px;top:102px;--ox:-9px;--oy:51px;--k:17"><b>💵</b></i></span></div>
+      <div class="card" tabindex="0"><span class="n">02</span><div><h3>Блокчейн-платежи</h3><p>Крипто-депозиты и выводы. Новые монеты и сети для депозитов и выводов.</p></div><span class="glyph" aria-hidden="true"><i style="left:0px;top:0px;--ox:42px;--oy:153px;--k:0"><b>₿</b></i><i style="left:17px;top:0px;--ox:25px;--oy:153px;--k:1"><b>₿</b></i><i style="left:34px;top:0px;--ox:8px;--oy:153px;--k:2"><b>🪙</b></i><i style="left:51px;top:0px;--ox:-9px;--oy:153px;--k:3"><b>🪙</b></i><i style="left:68px;top:0px;--ox:-26px;--oy:153px;--k:4"><b>⛓️</b></i><i style="left:68px;top:17px;--ox:-26px;--oy:136px;--k:5"><b>₿</b></i><i style="left:51px;top:34px;--ox:-9px;--oy:119px;--k:6"><b>🔗</b></i><i style="left:34px;top:51px;--ox:8px;--oy:102px;--k:7"><b>₮</b></i><i style="left:17px;top:68px;--ox:25px;--oy:85px;--k:8"><b>🔗</b></i><i style="left:0px;top:85px;--ox:42px;--oy:68px;--k:9"><b>⛓️</b></i><i style="left:0px;top:102px;--ox:42px;--oy:51px;--k:10"><b>🪙</b></i><i style="left:17px;top:102px;--ox:25px;--oy:51px;--k:11"><b>⛓️</b></i><i style="left:34px;top:102px;--ox:8px;--oy:51px;--k:12"><b>🪙</b></i><i style="left:51px;top:102px;--ox:-9px;--oy:51px;--k:13"><b>💎</b></i><i style="left:68px;top:102px;--ox:-26px;--oy:51px;--k:14"><b>₮</b></i></span></div>
+      <div class="card" tabindex="0"><span class="n">03</span><div><h3>Backend, DevOps и DBA</h3><p>Менеджерская работа с командами: планирование, приоритеты, коммуникация.</p></div><span class="glyph" aria-hidden="true"><i style="left:0px;top:0px;--ox:42px;--oy:153px;--k:0"><b>🧑‍💻</b></i><i style="left:17px;top:0px;--ox:25px;--oy:153px;--k:1"><b>💻</b></i><i style="left:34px;top:0px;--ox:8px;--oy:153px;--k:2"><b>🖥️</b></i><i style="left:51px;top:0px;--ox:-9px;--oy:153px;--k:3"><b>🧑‍💻</b></i><i style="left:68px;top:0px;--ox:-26px;--oy:153px;--k:4"><b>🛠️</b></i><i style="left:0px;top:17px;--ox:42px;--oy:136px;--k:5"><b>🔧</b></i><i style="left:0px;top:34px;--ox:42px;--oy:119px;--k:6"><b>🖥️</b></i><i style="left:0px;top:51px;--ox:42px;--oy:102px;--k:7"><b>🛠️</b></i><i style="left:17px;top:51px;--ox:25px;--oy:102px;--k:8"><b>💾</b></i><i style="left:34px;top:51px;--ox:8px;--oy:102px;--k:9"><b>⚙️</b></i><i style="left:51px;top:51px;--ox:-9px;--oy:102px;--k:10"><b>🛠️</b></i><i style="left:0px;top:68px;--ox:42px;--oy:85px;--k:11"><b>💻</b></i><i style="left:0px;top:85px;--ox:42px;--oy:68px;--k:12"><b>🖥️</b></i><i style="left:0px;top:102px;--ox:42px;--oy:51px;--k:13"><b>🖥️</b></i><i style="left:17px;top:102px;--ox:25px;--oy:51px;--k:14"><b>🔧</b></i><i style="left:34px;top:102px;--ox:8px;--oy:51px;--k:15"><b>🖥️</b></i><i style="left:51px;top:102px;--ox:-9px;--oy:51px;--k:16"><b>🛠️</b></i><i style="left:68px;top:102px;--ox:-26px;--oy:51px;--k:17"><b>🔧</b></i></span></div>
+      <div class="card" tabindex="0"><span class="n">04</span><div><h3>Операционка</h3><p>Инциденты, логи, банки и провайдеры.</p></div><span class="glyph" aria-hidden="true"><i style="left:0px;top:0px;--ox:42px;--oy:153px;--k:0"><b>📜</b></i><i style="left:68px;top:0px;--ox:-26px;--oy:153px;--k:1"><b>📞</b></i><i style="left:0px;top:17px;--ox:42px;--oy:136px;--k:2"><b>📞</b></i><i style="left:17px;top:17px;--ox:25px;--oy:136px;--k:3"><b>🎧</b></i><i style="left:68px;top:17px;--ox:-26px;--oy:136px;--k:4"><b>🎧</b></i><i style="left:0px;top:34px;--ox:42px;--oy:119px;--k:5"><b>📞</b></i><i style="left:34px;top:34px;--ox:8px;--oy:119px;--k:6"><b>📟</b></i><i style="left:68px;top:34px;--ox:-26px;--oy:119px;--k:7"><b>🧯</b></i><i style="left:0px;top:51px;--ox:42px;--oy:102px;--k:8"><b>🧯</b></i><i style="left:34px;top:51px;--ox:8px;--oy:102px;--k:9"><b>🧯</b></i><i style="left:68px;top:51px;--ox:-26px;--oy:102px;--k:10"><b>📜</b></i><i style="left:0px;top:68px;--ox:42px;--oy:85px;--k:11"><b>🎧</b></i><i style="left:51px;top:68px;--ox:-9px;--oy:85px;--k:12"><b>🔍</b></i><i style="left:68px;top:68px;--ox:-26px;--oy:85px;--k:13"><b>🔥</b></i><i style="left:0px;top:85px;--ox:42px;--oy:68px;--k:14"><b>📜</b></i><i style="left:68px;top:85px;--ox:-26px;--oy:68px;--k:15"><b>🔍</b></i><i style="left:0px;top:102px;--ox:42px;--oy:51px;--k:16"><b>🔥</b></i><i style="left:68px;top:102px;--ox:-26px;--oy:51px;--k:17"><b>📞</b></i></span></div>
+      <div class="card" tabindex="0"><span class="n">05</span><div><h3>Процессы</h3><p>Scrum, Jira, планирования, груминги, ретро.</p></div><span class="glyph" aria-hidden="true"><i style="left:17px;top:0px;--ox:25px;--oy:153px;--k:0"><b>📌</b></i><i style="left:34px;top:0px;--ox:8px;--oy:153px;--k:1"><b>🏃</b></i><i style="left:51px;top:0px;--ox:-9px;--oy:153px;--k:2"><b>📋</b></i><i style="left:0px;top:17px;--ox:42px;--oy:136px;--k:3"><b>✅</b></i><i style="left:68px;top:17px;--ox:-26px;--oy:136px;--k:4"><b>🏃</b></i><i style="left:0px;top:34px;--ox:42px;--oy:119px;--k:5"><b>🔄</b></i><i style="left:0px;top:51px;--ox:42px;--oy:102px;--k:6"><b>🔄</b></i><i style="left:34px;top:51px;--ox:8px;--oy:102px;--k:7"><b>😎</b></i><i style="left:51px;top:51px;--ox:-9px;--oy:102px;--k:8"><b>😎</b></i><i style="left:68px;top:51px;--ox:-26px;--oy:102px;--k:9"><b>📋</b></i><i style="left:0px;top:68px;--ox:42px;--oy:85px;--k:10"><b>🚀</b></i><i style="left:68px;top:68px;--ox:-26px;--oy:85px;--k:11"><b>✅</b></i><i style="left:0px;top:85px;--ox:42px;--oy:68px;--k:12"><b>😎</b></i><i style="left:68px;top:85px;--ox:-26px;--oy:68px;--k:13"><b>🚀</b></i><i style="left:17px;top:102px;--ox:25px;--oy:51px;--k:14"><b>✅</b></i><i style="left:34px;top:102px;--ox:8px;--oy:51px;--k:15"><b>📋</b></i><i style="left:51px;top:102px;--ox:-9px;--oy:51px;--k:16"><b>📌</b></i><i style="left:68px;top:102px;--ox:-26px;--oy:51px;--k:17"><b>📌</b></i></span></div>
+      <div class="card" tabindex="0"><span class="n">06</span><div><h3>Люди</h3><p>One-to-one и персональный фидбэк без воды, с заботой.</p></div><span class="glyph" aria-hidden="true"><i style="left:17px;top:0px;--ox:25px;--oy:153px;--k:0"><b>🫂</b></i><i style="left:34px;top:0px;--ox:8px;--oy:153px;--k:1"><b>🥰</b></i><i style="left:51px;top:0px;--ox:-9px;--oy:153px;--k:2"><b>🥰</b></i><i style="left:34px;top:17px;--ox:8px;--oy:136px;--k:3"><b>🤝</b></i><i style="left:34px;top:34px;--ox:8px;--oy:119px;--k:4"><b>🤗</b></i><i style="left:34px;top:51px;--ox:8px;--oy:102px;--k:5"><b>😊</b></i><i style="left:34px;top:68px;--ox:8px;--oy:85px;--k:6"><b>😊</b></i><i style="left:34px;top:85px;--ox:8px;--oy:68px;--k:7"><b>🤗</b></i><i style="left:17px;top:102px;--ox:25px;--oy:51px;--k:8"><b>🤝</b></i><i style="left:34px;top:102px;--ox:8px;--oy:51px;--k:9"><b>💬</b></i><i style="left:51px;top:102px;--ox:-9px;--oy:51px;--k:10"><b>🥰</b></i></span></div>
+    </div>
+    <p class="hint" id="hint"><span class="ask">наведи на каждую карточку: из эмодзи сложится слово</span><span class="final">dzengi</span></p>
+  </div>
+</section>
+
+<section id="stories">
+  <div class="wrap">
+    <div class="head"><span>03</span><h2>Истории</h2></div>
+    <div class="stories">
+      <article class="story"><span class="n">Миграция</span><h3>Курс на независимость</h3><p>Перевели фиатный платёжный сервис на нашу сторону и сняли зависимость от другой команды. Были ошибки — сделали выводы. Сервис стабилен и полностью наш.</p></article>
+      <article class="story"><span class="n">Идеи наверх</span><h3>Не проглатывать инициативы</h3><p>Ценю, когда команда предлагает идеи по улучшению продукта, и выношу их на встречу с менеджментом. В небольшой компании каждую идею могут услышать.</p></article>
+      <article class="story"><span class="n">Ретро</span><h3>Ретро за пирогом</h3><p>Готовлю вкусняшки для ретро: торт, пирог, пиццу. Так разбирать спринт чуточку приятнее.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="exp">
+  <div class="wrap">
+    <div class="head"><span>04</span><h2>Опыт</h2></div>
+    <div class="timeline">
+      <div class="job">
+        <div class="when">сентябрь 2025 — настоящее время</div>
+        <div><h3>Руководитель проекта</h3><div class="org">Dzengi.com</div><p>Фиатные и блокчейн-платежи, команды Backend, DevOps и DBA.</p></div>
+      </div>
+      <div class="job">
+        <div class="when">февраль 2023 — 1 августа 2025<br>Минск</div>
+        <div><h3>Business Analyst</h3><div class="org">Альфа-Банк (Беларусь)</div><p>Бизнес-требования и спецификации, BPMN 2.0, прототипы, работа с разработчиком, OKR-мастер, PI planning и Agile days.</p></div>
+      </div>
+      <div class="job">
+        <div class="when">ноябрь 2021 — ноябрь 2022<br>частичная занятость · Минск</div>
+        <div><h3>Помощник руководителя</h3><div class="org">БелАудитАльянс</div><p>Организация 7 мероприятий (офлайн и онлайн), SMM, анализ конкурентов и целевой аудитории.</p></div>
+      </div>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2>Интересные факты</h2>
-    <ul class="facts">
-      <li>Меня задевает, что у меня нет имени — просто «кот». А фамилия есть: Матроскин.</li>
-      <li>Записываю каждую копейку. Это не жадность, это порядок.</li>
-      <li>Корову напрокат все считали блажью, а вышло выгоднейшее вложение: и молоко, и телёнок.</li>
-      <li>Мой принцип — «совместный труд объединяет» (для моей пользы, разумеется).</li>
-      <li>Ворчун снаружи, но надёжный внутри. Ворчание — это у меня форма заботы.</li>
-    </ul>
+    <div class="head"><span>05</span><h2>Образование</h2></div>
+    <div class="timeline">
+      <div class="job">
+        <div class="when">2019 — 2023</div>
+        <div><h3>БГУ</h3><div class="org">Экономический факультет, банковское дело</div><p>Финансы и кредит.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="short">
+  <div class="wrap">
+    <div class="head"><span>06</span><h2>Главное</h2></div>
+    <div class="bento">
+      <div class="tile t-wide reveal"><span class="tl">рост за год</span><div class="big"><span class="from">1</span><span class="arr">→</span><b class="count" data-to="9">9</b></div><p>человек в командах: с одного до четырёх команд и девяти человек.</p></div>
+      <div class="tile reveal"><span class="tl">процессы</span><h3>Внедрила Agile</h3><p>Начали работать по спринтам.</p><div class="chips"><i>спринты</i><i>планирования</i><i>груминги</i><i>ретро</i></div></div>
+      <div class="tile reveal"><span class="tl">роль</span><h3>Четыре в одной</h3><p>Моя роль многогранна, в ней сходятся:</p><div class="chips"><i>менеджмент</i><i>владелец продукта</i><i>аналитика</i><i>тестирование</i></div></div>
+      <div class="tile t-dark reveal"><span class="tl">команда</span><h3>Мне повезло</h3><p>Безмерно благодарна коллегам: они терпеливо объясняют, как всё устроено, и за ними хочется тянуться.</p></div>
+      <div class="tile reveal"><span class="tl">вдохновляет</span><h3>Истории</h3><div class="chips"><i>подкасты с предпринимателями</i><i>истории брендов</i><i>истории людей</i><i>коллеги и руководители</i></div></div>
+    </div>
+    <h3 class="facts-title">Факты обо мне <span>наведи или нажми на карточку</span></h3>
+    <div class="facts">
+      <div class="fact" tabindex="0"><div class="fi"><div class="ff"><span class="fe">🏦</span><span class="fn">факт 01</span><h3>Из банка в крипту</h3></div><div class="fb"><p>Начинала бизнес-аналитиком в Альфа-Банке, а теперь развиваю платёжные сервисы криптобиржи.</p></div></div></div>
+      <div class="fact" tabindex="0"><div class="fi"><div class="ff"><span class="fe">🥧</span><span class="fn">факт 02</span><h3>Ретро со вкусняшкой</h3></div><div class="fb"><p>Торт, пирог или пицца: без угощения ретро у нас не проходит.</p></div></div></div>
+      <div class="fact" tabindex="0"><div class="fi"><div class="ff"><span class="fe">🎤</span><span class="fn">факт 03</span><h3>Концерты</h3></div><div class="fb"><p>Ничто не даёт мне столько эмоций, как живой концерт.</p></div></div></div>
+      <div class="fact" tabindex="0"><div class="fi"><div class="ff"><span class="fe">🧭</span><span class="fn">факт 04</span><h3>Не по плану</h3></div><div class="fb"><p>Если что-то идёт не по плану — это тоже часть плана. Эта мысль меня успокаивает.</p></div></div></div>
+    </div>
   </div>
 </section>
 
 <section class="finale">
-  <img src="images/garden.jpg" alt="Урожай с огорода">
   <div class="wrap">
-    <blockquote>«Совместный труд — для моей пользы — он объединяет.»<small>— кот Матроскин. Пока другие мечтают, я делаю запасы.</small></blockquote>
+    <blockquote>«Продукт — классный, работающий и простой для клиента, а команда — под защитой: ко мне можно прийти без оглядки, и я помогу решить проблему.»<small>Принцип, к которому я стремлюсь</small></blockquote>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">
-    Фото: «violence begets violence in ripples…» — naturalflow (<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>, <a href="https://www.flickr.com/photos/70693287@N00/4497566897">источник</a>);
-    «Cow meadow farm 2020» — Harrisonkenneth (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=88228720">источник</a>);
-    «Fresh Milk» — ShardsOfBlue (<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>, <a href="https://www.flickr.com/photos/9350569@N08/5512782277">источник</a>);
-    «Cat mosaic on house façade, Brussels» — historic.brussels (<a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>, <a href="https://www.flickr.com/photos/22325431@N05/2183347960">источник</a>);
-    «Vegetable Garden Harvest» — Gemma Evans stayandroam (<a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en/">CC0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=61771912">источник</a>).
-  </div>
+  <div class="wrap">Проектный менеджер · 2026</div>
 </footer>
+<script>
+(function(){
+  var cards=document.querySelectorAll('.card'),hint=document.getElementById('hint'),t;
+  function mark(c){
+    if(c.classList.contains('done'))return;
+    c.classList.add('done');
+    if(document.querySelectorAll('.card.done').length===cards.length){
+      clearTimeout(t);t=setTimeout(function(){hint.classList.add('complete')},2300);
+    }
+  }
+  cards.forEach(function(c){
+    ['mouseenter','focus','touchstart','click'].forEach(function(ev){c.addEventListener(ev,function(){mark(c)},{passive:true})});
+  });
+})();
+</script>
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var tiles=document.querySelectorAll('.reveal');
+  function count(el){
+    var to=+el.dataset.to,v=1;el.textContent=v;
+    var id=setInterval(function(){v++;el.textContent=v;if(v>=to)clearInterval(id)},110);
+  }
+  function show(t,i){
+    setTimeout(function(){t.classList.add('in');var c=t.querySelector('.count');if(c)count(c)},i*110);
+  }
+  if(!('IntersectionObserver' in window)){tiles.forEach(function(t){t.classList.add('in')});return}
+  var io=new IntersectionObserver(function(es){
+    var k=0;es.forEach(function(e){if(e.isIntersecting){show(e.target,k++);io.unobserve(e.target)}});
+  },{threshold:.25});
+  tiles.forEach(function(t){io.observe(t)});
+})();
+</script>
+<script>
+(function(){
+  var steps=document.querySelectorAll('.step');
+  if(!('IntersectionObserver' in window)){steps.forEach(function(s){s.classList.add('seen')});return}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('seen');io.unobserve(e.target)}});
+  },{threshold:.5});
+  steps.forEach(function(st){io.observe(st)});
+})();
+</script>
 </body>
 </html>
